@@ -1,0 +1,161 @@
+PS C:\Users\prash\Documents\GitHub\ethereum-blockchain-setup> docker build --progress=plain --no-cache -t geth-client-poa .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.20kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/ethereum/client-go:v1.13.15-amd64
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 34B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/ethereum/client-go:v1.13.15-amd64
+#5 DONE 0.1s
+
+#6 [2/6] RUN echo password123 > /root/password.txt     && geth account new --password /root/password.txt | grep "Public address of the key" | awk '{print substr($NF, 3)}' > /root/account     && cat /root/.ethereum/keystore/*
+#6 0.354 INFO [11-14|20:47:04.344] Maximum peer count                       ETH=50 total=50
+#6 0.355 INFO [11-14|20:47:04.346] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+#6 1.216 {"address":"b4fcdfb08243d850f1fbe505730e44373f6bf3f9","crypto":{"cipher":"aes-128-ctr","ciphertext":"3716c5c0aff4a2007122c60726e79eefed34b9a9f5a58d20b123356f53d50eb2","cipherparams":{"iv":"1c72a781970f3ca4feab57b7847cc18b"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"ef7d2e1f7fa30a488486626e457066c2b073f25a0fab594a47e750ac389e33fb"},"mac":"56845e4deec34a2d9dea5ae364a0be99a28a44392b0e754f00af8b45f4a916a3"},"id":"a60b0c8d-0749-4b9a-b30d-14a1580e7386","version":3}
+#6 DONE 1.2s
+
+#7 [3/6] COPY genesis.json /tmp
+#7 DONE 0.0s
+
+#8 [4/6] RUN account_address=$(cat /root/account)     && echo ${account_address}     && sed -i "s/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/${account_address}/g" /tmp/genesis.json     && cat /tmp/genesis.json
+#8 0.340 b4FCdFb08243d850f1FbE505730E44373f6BF3f9
+#8 0.342 {
+#8 0.342   "config": {
+#8 0.342     "chainId": 12345,
+#8 0.342     "homesteadBlock": 0,
+#8 0.342     "eip150Block": 0,
+#8 0.342     "eip155Block": 0,
+#8 0.342     "eip158Block": 0,
+#8 0.342     "byzantiumBlock": 0,
+#8 0.342     "constantinopleBlock": 0,
+#8 0.342     "petersburgBlock": 0,
+#8 0.342     "istanbulBlock": 0,
+#8 0.342     "berlinBlock": 0,
+#8 0.342     "clique": {
+#8 0.342       "period": 5,
+#8 0.342       "epoch": 30000
+#8 0.342     }
+#8 0.342   },
+#8 0.342   "difficulty": "0",
+#8 0.342   "gasLimit": "8000000",
+#8 0.342   "extradata": "0x0000000000000000000000000000000000000000000000000000000000000000b4FCdFb08243d850f1FbE505730E44373f6BF3f90000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+#8 0.342   "alloc": {
+#8 0.342     "b4FCdFb08243d850f1FbE505730E44373f6BF3f9": { "balance": "200000000000000000000000" },
+#8 0.342     "7df9a875a174b3bc565e6424a0050ebc1b2d1d82": { "balance": "300000" },
+#8 0.342     "f41c74c9ae680c1aa78f42e5647a62f353b7bdde": { "balance": "400000" }
+#8 0.342   }
+#8 0.342 }
+#8 DONE 0.4s
+
+#9 [5/6] RUN geth init /tmp/genesis.json     && rm -f ~/.ethereum/geth/nodekey
+#9 0.502 INFO [11-14|20:47:06.133] Maximum peer count                       ETH=50 total=50
+#9 0.503 INFO [11-14|20:47:06.134] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+#9 0.506 INFO [11-14|20:47:06.137] Set global gas cap                       cap=50,000,000
+#9 0.507 INFO [11-14|20:47:06.137] Initializing the KZG library             backend=gokzg
+#9 0.521 INFO [11-14|20:47:06.152] Defaulting to pebble as the backing database
+#9 0.521 INFO [11-14|20:47:06.152] Allocated cache and file handles         database=/root/.ethereum/geth/chaindata cache=16.00MiB handles=16
+#9 0.557 INFO [11-14|20:47:06.188] Opened ancient database                  database=/root/.ethereum/geth/chaindata/ancient/chain readonly=false
+#9 0.558 INFO [11-14|20:47:06.188] State schema set to default              scheme=hash
+#9 0.558 INFO [11-14|20:47:06.188] Writing custom genesis block
+#9 0.561 INFO [11-14|20:47:06.191] Persisted trie from memory database      nodes=4 size=580.00B time=2.101199ms gcnodes=0 gcsize=0.00B gctime=0s livenodes=0 livesize=0.00B
+#9 0.582 INFO [11-14|20:47:06.212] Successfully wrote genesis state         database=chaindata hash=32d0b6..ca3f26
+#9 0.582 INFO [11-14|20:47:06.212] Defaulting to pebble as the backing database
+#9 0.582 INFO [11-14|20:47:06.212] Allocated cache and file handles         database=/root/.ethereum/geth/lightchaindata cache=16.00MiB handles=16
+#9 0.620 INFO [11-14|20:47:06.251] Opened ancient database                  database=/root/.ethereum/geth/lightchaindata/ancient/chain readonly=false
+#9 0.620 INFO [11-14|20:47:06.251] State schema set to default              scheme=hash
+#9 0.620 INFO [11-14|20:47:06.251] Writing custom genesis block
+#9 0.623 INFO [11-14|20:47:06.254] Persisted trie from memory database      nodes=4 size=580.00B time=2.941897ms gcnodes=0 gcsize=0.00B gctime=0s livenodes=0 livesize=0.00B
+#9 0.648 INFO [11-14|20:47:06.279] Successfully wrote genesis state         database=lightchaindata hash=32d0b6..ca3f26
+#9 DONE 0.8s
+
+#10 [6/6] RUN geth account new --password /root/password.txt     && cat /root/.ethereum/keystore/*
+#10 0.431 INFO [11-14|20:47:06.820] Maximum peer count                       ETH=50 total=50
+#10 0.432 INFO [11-14|20:47:06.822] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+#10 1.287 
+#10 1.287 Your new key was generated
+#10 1.287
+#10 1.287 Public address of the key:   0xf290dB46B6f847C97E1715EF285883E3479356c5
+#10 1.287 Path of the secret key file: /root/.ethereum/keystore/UTC--2024-11-14T20-47-06.822576861Z--f290db46b6f847c97e1715ef285883e3479356c5
+#10 1.287
+#10 1.287 - You can share your public address with anyone. Others need it to interact with you.
+#10 1.287 - You must NEVER share the secret key with anyone! The key controls access to your funds!
+#10 1.287 - You must BACKUP your key file! Without the key, it's impossible to access account funds!
+#10 1.287 - You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
+#10 1.287
+#10 1.290 {"address":"b4fcdfb08243d850f1fbe505730e44373f6bf3f9","crypto":{"cipher":"aes-128-ctr","ciphertext":"3716c5c0aff4a2007122c60726e79eefed34b9a9f5a58d20b123356f53d50eb2","cipherparams":{"iv":"1c72a781970f3ca4feab57b7847cc18b"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"ef7d2e1f7fa30a488486626e457066c2b073f25a0fab594a47e750ac389e33fb"},"mac":"56845e4deec34a2d9dea5ae364a0be99a28a44392b0e754f00af8b45f4a916a3"},"id":"a60b0c8d-0749-4b9a-b30d-14a1580e7386","version":3}{"address":"f290db46b6f847c97e1715ef285883e3479356c5","crypto":{"cipher":"aes-128-ctr","ciphertext":"f362581cb317ddc5cd72b609a802c122d329b1bc6c9b82a03ae1b26978c4a893","cipherparams":{"iv":"7b5d3a885d04c053a235b075a62f0310"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"9ffec12c232c4724c8025f8f09e2f086342ae3feb0beadbe0a5bd215e9559fd7"},"mac":"403c8e200ce4b98cd5c3146822ebf5a7a14bc22cd4eea53a1b05cd8d30129e27"},"id":"c23bc1f3-5aec-4513-9ffd-5e114a8cb76c","version":3}
+#10 DONE 1.3s
+
+#11 exporting to image
+#11 exporting layers 0.1s done
+#11 writing image sha256:b85d5fdb1db53d56f1b1b66cd297702e65a54aa1e9a25659d5643aad6e7e0b68 done
+#11 naming to docker.io/library/geth-client-poa done
+#11 DONE 0.1s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/nyegavup5xxdt1a7a8nxpsj1o
+
+What's next:
+    View a summary of image vulnerabilities and recommendations → docker scout quickview 
+PS C:\Users\prash\Documents\GitHub\ethereum-blockchain-setup>
+
+docker container rm ethereum-blockchain-setup-geth-bootnode-1
+docker container rm ethereum-blockchain-setup-geth-rpc-endpoint-1
+docker container rm ethereum-blockchain-setup-geth-miner-1  
+docker network rm ethereum-blockchain-setup_priv-eth-net
+
+docker pull ethereum/client-go:stable
+
+docker pull ethereum/client-go:v1.13.15-amd64
+docker pull ethereum/client-go:v1.13.14-amd64
+docker pull ethereum/client-go:v1.13.13-amd64
+docker pull ethereum/client-go:v1.13.10-amd64
+docker pull ethereum/client-go:v1.13.1-amd64
+docker pull ethereum/client-go:v1.12.1-amd64
+docker pull ethereum/client-go:v1.11.1-amd64
+
+// docker run -it ethereum/client-go:stable
+// docker build --progress=plain -t geth-client-poa .
+docker build --progress=plain --no-cache -t geth-client-poa .
+docker compose up
+
+$ docker pull ethereum/client-go:v1.12.1-amd64
+
+
+
+personal.unlockAccount("0x1042c567276971cb85cc6d259b3dd12d1103d883", "password123", 600)
+
+
+eth.getBalance("0x1042c567276971cb85cc6d259b3dd12d1103d883")
+1.15792089237316195423570985008687907853269984665640564039457584007913129639927e+77
+1.15792089237316195423570985008687907853269984665640564039457583979538129618927e+77
+personal.newAccount("password123");
+eth.getBalance("0x577f87d75cc75d1d5f8a61a7360d6efbc4f4d012")
+
+eth.sendTransaction({
+    from: "0x1042c567276971cb85cc6d259b3dd12d1103d883",
+    to: "0x577f87d75cc75d1d5f8a61a7360d6efbc4f4d012",
+    value: web3.toWei(1, "ether")
+})
+
+eth.pendingTransactions.length
+
+
+eth.getTransactionReceipt("0x5c084421e96c5072970bb2d9683e553441693c490fe7be77e54ff7edc7191699")
+
+eth.pendingTransactions
+
+      --dev
+      --dev.period=0
+eth.getBlock("pending").transactions.length 
+,
+    "terminalTotalDifficultyPassed": true

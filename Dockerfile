@@ -1,5 +1,5 @@
 # Pull Docker image of official golang ethereum implementation 
-FROM ethereum/client-go:stable
+FROM ethereum/client-go:v1.14.11
 
 # Generate a new account (to pre-fund) using "password123" password
 RUN echo password123 > /root/password.txt \
